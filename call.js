@@ -122,3 +122,129 @@ Function.propotype.myBind = function (context, ...args) {
     result.prototype = Object.create(fn.prototype);
     return result;
 }
+
+
+// // 看了新的视频又加深了理解
+
+// const person = {
+//     name: 'John',
+//     sayHello: function() {
+//       console.log(`Hello, my name is ${this.name}`);
+//     }
+//   };
+  
+//   const jane = {
+//     name: 'Jane'
+//   };
+  
+//   person.sayHello.call(jane,1,2,3); // 输出：Hello, my name is Jane
+//   person.sayHello.myCall(jane,1,2,3); // 输出：Hello, my name is Jane
+  
+  
+// // 1.如何将我自定义的方法可以被直接调用呢，需要将它写入方法的属性中（加入原型链）,才可以被function直接被调用
+// Function.prototype.myCall = function(context,...arg){
+//     // 2. 需要判断一下this到底是不是的函数,不是函数，需要抛出错误
+//     if(typeof this !== 'function'){
+//         throw new Error('error')
+//     }
+//     // 3.看看context指向,如果context没有传入任何值，那么指向的是window
+//     if(context === undefined||context === null){
+//         context =  window
+//     }
+//     //4.此时this代表的是什么。是person.sayHello。它是一个函数
+//     let keep = this
+//     // 5.我们想改变一下this指针。需要创建在jane里面创建一个函数，并将person里面的函数放进这个假设的函数内，后面才可以被调用
+//     context.fn = keep
+//     // 6.我们需要获取后面的参数
+//     let res = context.fn(...arg)
+//     //有创建就得有删除，不然会混乱
+//     delete context.fn
+//     return res
+// }
+
+// const person = {
+//     name: 'John',
+//     sayHello: function() {
+//       console.log(`Hello, my name is ${this.name}`);
+//     }
+//   };
+  
+//   const jane = {
+//     name: 'Jane'
+//   };
+  
+//   person.sayHello.apply(jane,[1,2,3]); // 输出：Hello, my name is Jane
+//   person.sayHello.myApply(jane,[1,2,3]); // 输出：Hello, my name is Jane
+
+//   // 1.将myApply放入function的原型链中，不然不可以被调用
+//   Function.prototype.myApply = function(context,arg){
+//     // 2.判断一下传入的context有无值
+//     if(context === undefined || context === null){
+//         context = window
+//     }
+//     // 3.判断一下person。sayhello是不是个函数
+//     if(typeof this !== 'function'){
+//         throw new Error('error')
+//     }
+//     //4.我们想要改变this的指向。想要将person中的this指向，指向jane
+//     // 5.需要在上下文中创建一个假的fn，并将this（相当一个方法，放进入fn中）
+//     context.fn = this
+//     // 7.调用一下方法，将值传入
+//     let res = context.fn(...arg)
+//     // 6.假设后还需要删掉这个方法
+//     delete context.fn
+//     return res
+//   }
+
+//   const person = {
+//     firstName: "John",
+//     lastName: "Doe",
+//     fullName: function() {
+//       return this.firstName + " " + this.lastName;
+//     }
+//   }
+  
+//   const logName = function() {
+//     console.log(this.fullName());
+//   }
+  
+//   const logPersonName = logName.bind(person);
+//   情况1.logPersonName();
+//   情况2.const obj = new logPersonName();
+
+//   const logPersonName = logName.myBind(person);
+//   logPersonName();
+
+// //1.myBind放入function的原型链中，不然不可以被调用
+// Function.prototype.myBind = function(context,...arg1){
+//         // 3.判断context是否为空
+//         if(context === undefined || context === null){
+//             context = window
+//         }
+//         // 4.判断this是否为函数
+//         if(typeof this !== 'function'){
+//             throw new Error('error')
+//         }
+//         let keep = this 
+//         const result = function(...arg2){
+//             if(this instanceof result){
+//                 this.fn = keep
+//                 let res = this.fn(...arg1,...arg2)
+//                 delete this.fn
+//                 return res
+//             }else{
+//                 //5.创建一个假的context.fn，将this这个函数保存进入
+//                 context.fn = keep
+//                 let res = context.fn(...arg1,...arg2)
+//                 delete context.fn
+//                 return res
+//             }
+            
+//         }
+
+//         // 需要返回参数
+//         // 要继承原型，不然不知道返回的函数都在调用什么。这个表达式常常用于实现继承。fn是爸爸，result是儿子
+//         result.prototype = Object.create(fn.prototype);
+//         return result
+//     }
+    
