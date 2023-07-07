@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #outer {
+        width: 200px;
+        height: 200px;
+        background-color: #ccc;
+        }
+        #inner {
+        width: 100px;
+        height: 100px;
+        background-color: #999;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="outer">
+        <div id="inner">
+          Click me
+        </div>
+      </div>
+      
+      <script>
+      const outer = document.getElementById('outer');
+      const inner = document.getElementById('inner');
+      
+      outer.addEventListener('click', function(e) {
+        console.log('Clicked outer');
+      });
+      
+      inner.addEventListener('click', function(e) {
+        e.stopPropagation();
+        console.log('Clicked inner');
+      });
+      </script>
+      
+</body>
+</html>

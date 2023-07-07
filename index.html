@@ -1,0 +1,44 @@
+<!-- 关于mouseover和mouseenter的区别 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #parent {
+        width: 200px;
+        height: 200px;
+        background-color: #ccc;
+        }
+
+        #child {
+        width: 100px;
+        height: 100px;
+        background-color: #999;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <div id="child">Child Element</div>
+      </div>
+      <script>
+      var parent = document.getElementById('parent');
+      var child = document.getElementById('child');
+      parent.addEventListener('mouseenter', function() {
+        console.log('mouseenter on parent');
+      });
+      parent.addEventListener('mouseover', function() {
+        console.log('mouseover on parent');
+      });
+      // child.addEventListener('mouseenter', function() {
+      //   console.log('mouseenter on child');
+      // });
+      // child.addEventListener('mouseover', function() {
+      //   console.log('mouseover on child');
+      // });
+      </script>
+</body>
+</html>

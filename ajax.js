@@ -17,3 +17,5 @@ function ajaxPromise(){
     });
     return promise;
 }
+
+  
