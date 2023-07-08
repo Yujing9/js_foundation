@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #parent {
+        width: 200px;
+        height: 200px;
+        background-color: #ccc;
+      }
+      #child {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="parent">
+      <div id="child">Click me</div>
+    </div>
+    <script>
+      const parent = document.getElementById("parent");
+      const child = document.getElementById("child");
+
+      parent.addEventListener("click", function (event) {
+        console.log("Parent click");
+      });
+
+      //   child.addEventListener("click", function (event) {
+      //     event.stopPropagation();
+      //     console.log("Child click");
+      //   });
+
+    //   child.addEventListener("click", function (event) {
+    //     event.stopImmediatePropagation();
+    //     console.log("Child additional click");
+    //   });
+      child.addEventListener("click", function (event) {
+        console.log("Event handler 1");
+      });
+
+      child.addEventListener("click", function (event) {
+        event.stopImmediatePropagation();
+        console.log("Event handler 2");
+      });
+
+      child.addEventListener("click", function (event) {
+        console.log("Event handler 3");
+      });
+
+      // 点击 child 元素，控制台输出：
+      // Child click
+      // Child additional click
+    </script>
+  </body>
+</html>
